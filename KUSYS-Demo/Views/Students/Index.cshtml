@@ -1,0 +1,248 @@
+﻿@model IEnumerable<KUSYS_Demo.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+
+<style>
+    .table {
+        min-width: 1000px !important;
+        width: 100%;
+        background: #fff;
+    }
+
+        .table thead.thead-primary {
+            background: #1089ff;
+        }
+
+        .table thead th {
+            border: none;
+            padding: 20px 30px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .table tbody tr {
+            margin-bottom: 10px;
+        }
+
+        .table tbody th, .table tbody td {
+            border: none;
+            padding: 20px 30px;
+            border-bottom: 3px solid #f8f9fd;
+            font-size: 14px;
+        }
+    .title{
+        margin-top: 30px;
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+    }
+    .studentsA{
+        border: 1px solid #1089ff;
+        background:transparent;
+        padding:10px;
+        margin:0;
+        border-radius:5px;
+        color:#333;
+        text-decoration:none;
+        transition:0.7s;
+        color: #1089ff;
+    }
+    .studentsA:hover{
+            background: #1089ff;
+            color:#333;
+            transition:0.7s;
+            color:white;
+    } 
+    .courseA {
+        border: 1px solid #1089ff;
+        background:transparent;
+        padding: 10px;
+        margin: 0;
+        border-radius: 5px;
+        color: #333;
+        text-decoration:none;
+        color: #1089ff;
+    }
+
+        .courseA:hover {
+            background: #1089ff;
+        color: #333;
+        transition: 0.7s;
+        color:white;
+    }
+
+    .aContainer{
+        display:flex;
+        align-items:center;
+        gap:10px;
+    }
+    .headContainer{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+    }
+    .updateA{
+        color: #00b36c;
+        padding:8px;
+        border-radius:5px;
+        text-decoration:none;
+        transition:0.7s;
+        font-weight:600;
+    }
+    .updateA:hover{
+        transition:0.7s;
+        color:#00b36c;
+    }  
+    .detailsA{
+        color: #0d6efd;
+        padding: 8px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight:600;
+        background:none;
+        border:none;
+    }
+
+        .detailsA:hover{
+            color: #0d6efd;
+            transition: 0.7s;
+        }
+    .deleteA{
+        color:#B70404;
+        padding: 8px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight:600;
+    }
+    .deleteA:hover{
+            color: #B70404;
+            transition: 0.7s;
+    }
+
+    .ui-dialog-titlebar-close{
+    border:none;
+    background:transparent;
+    }
+    </style>
+
+
+<div class="headContainer">
+<h1 class="title">Öğrenciler</h1>
+<div class="aContainer">
+<p>
+    <a class="studentsA" asp-action="Create">Öğrenci Ekle</a>
+</p>
+<p>
+    <a class="courseA" asp-action="AddCourse">Kurs Ekle</a>
+</p>
+</div>
+</div>
+
+<table class="table">
+    <thead class="thead-primary">
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Doğum tarihi</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    <a class="updateA" asp-action="UpdatePage" asp-route-id="@item.StudentId">Güncelle</a> |
+                    <button class="detailsA" onclick="showStudentDetails(@item.StudentId)">Detay</button> |
+                    @*<a class="detailsA" asp-action="Details" asp-route-id="@item.StudentId">Detay</a> |*@
+                    <a href="#" class="deleteA" onclick="deleteStudent(@item.StudentId)">Sil</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function deleteStudent(id) {
+            debugger;
+            Swal.fire({
+                title: "Onay",
+                text: "Öğrenciyi silmek istediğinize emin misiniz?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sil",
+                cancelButtonText: "İptal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Students/Delete',
+                    type: 'POST',
+                    data: { studentId: id },
+                    success: function (result) {
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+
+                    }
+                
+                });
+                }
+            });
+        }
+
+
+        function showStudentDetails(studentId) {
+            // Öğrenci detaylarını almak için AJAX isteği yapın
+            $.ajax({
+                url: '/Students/Details/' + studentId,
+                type: 'GET',
+                success: function (data) {
+                    debugger
+                    // AJAX isteği başarılı olduğunda SweetAlert ile detayları gösterin
+                    Swal.fire({
+                        html: data, // Detayları içeren HTML içeriği
+                        showCloseButton: true,
+                        showConfirmButton:false
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // AJAX isteği başarısız olduğunda hata mesajını gösterin
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: 'Öğrenci detayları alınamadı.'
+                    });
+                }
+            });
+        }
+
+
+       
+
+
+
+    </script>
+}
+
+
+
+

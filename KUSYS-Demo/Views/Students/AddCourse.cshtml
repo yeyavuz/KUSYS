@@ -1,0 +1,94 @@
+﻿@model KUSYS_Demo.Models.StudentCourses
+
+@{
+    ViewData["Title"] = "AddCourse";
+}
+<style>
+    h1 {
+        letter-spacing: -1px;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .formContainer {
+        background: white;
+        border-radius: 4px;
+        box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+        padding: 50px 20px;
+    }
+
+    .padding-bottom--24 {
+        padding-bottom: 24px;
+    }
+
+    .grid--50-50 {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        display: block;
+    }
+
+    .field input {
+        font-size: 16px;
+        line-height: 28px;
+        padding: 8px 16px;
+        width: 100%;
+        min-height: 44px;
+        border: unset;
+        border-radius: 4px;
+        outline-color: rgb(84 105 212 / 0.5);
+        background-color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+    }
+
+    input[type="submit"] {
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        background: #1089ff;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <h1>Öğrenci Ekle</h1>
+            <div class="formContainer">
+
+                <form asp-action="AddCourseToStudent">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="field padding-bottom--24">
+                        <label asp-for="StudentId" class="control-label">Öğrenci Seçin</label>
+                        <select asp-for="StudentId" class="form-control" asp-items="ViewBag.Students"></select>
+                    </div>
+                    <div class="field padding-bottom--24">
+                        <label asp-for="CourseId" class="control-label">Kurs Seçin</label>
+                        <select asp-for="CourseId" class="form-control" asp-items="ViewBag.Courses"></select>
+                    </div>
+                    <div class="field padding-bottom--24">
+                        <input type="submit" value="Ekle" class="btn btn-primary" />
+                    </div>
+                    <div class="field padding-bottom--24" style="text-align:center;">
+                        <a asp-action="CourseList" style="text-decoration:none;color:#1089ff;font-weight:600;">Listeye Dön</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+
+
+
+
+

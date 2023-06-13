@@ -1,0 +1,69 @@
+﻿@model IEnumerable<KUSYS_Demo.Models.StudentCourses>
+
+@{
+    ViewData["Title"] = "CourseStudentIndex";
+}
+<style>
+
+  h1{
+      margin-top:30px;
+      margin-bottom:30px;
+      font-size:1.5rem;
+  }
+    .table {
+        min-width: 1000px !important;
+        width: 100%;
+        background: #fff;
+    }
+
+        .table thead.thead-primary {
+            background: #1089ff;
+        }
+
+        .table thead th {
+            border: none;
+            padding: 20px 30px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .table tbody tr {
+            margin-bottom: 10px;
+        }
+
+        .table tbody th, .table tbody td {
+            border: none;
+            padding: 20px 30px;
+            border-bottom: 3px solid #f8f9fd;
+            font-size: 14px;
+        }
+
+</style>
+
+<h1>Öğrenci - Kurs Listesi</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead class="thead-primary">
+        <tr>
+            <th>Öğrenci Adı</th>
+            <th>Kurs Kodu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.FirstName)
+                    @Html.DisplayFor(modelItem => item.Student.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.CourseId)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

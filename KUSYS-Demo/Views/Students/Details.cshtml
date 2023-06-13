@@ -1,0 +1,109 @@
+﻿@model KUSYS_Demo.Models.Student
+
+@{
+    //ViewData["Title"] = "Details";
+    Layout = null;
+}
+<style>
+    h1 {
+        letter-spacing: -1px;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .formContainer {
+        background: white;
+        border-radius: 4px;
+        text-align:start;
+    }
+
+    .padding-bottom--24 {
+        padding-bottom: 24px;
+    }
+
+    .grid--50-50 {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        display: block;
+    }
+
+    .field input {
+        font-size: 16px;
+        line-height: 28px;
+        padding: 8px 16px;
+        width: 100%;
+        min-height: 44px;
+        border: unset;
+        border-radius: 4px;
+        outline-color: rgb(84 105 212 / 0.5);
+        background-color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+    }
+
+    input[type="submit"] {
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        background: #1089ff;
+    }
+    p{
+        margin-bottom: 0;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+    span{
+        margin-left: 10px;
+        font-weight: 400;
+        color: #808080;
+    }
+
+    .flexCourse{
+        display:flex;
+        gap:30px;
+        margin-top:10px;
+    }
+
+    .courseCard{
+        background:#e5e5e5;
+        padding:10px;
+        border-radius:10px;
+    }
+
+
+</style>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h1>Öğrenci Detayı</h1>
+            <div class="formContainer">
+                        <div class="field padding-bottom--24">
+                            <p>Ad:<span> @Html.DisplayFor(model => model.FirstName)</span></p>
+                        </div>
+                        <div class="field padding-bottom--24">
+                            <p>Soyad:<span> @Html.DisplayFor(model => model.LastName)</span></p>
+                        </div>
+                    <div class="field padding-bottom--24">
+                    <p>Doğum Tarihi:<span>   @Html.DisplayFor(model => model.BirthDate)</span></p>
+                    </div>
+                <div class="field padding-bottom--24">
+                    <p>Kurslar:</p>
+                    <div class="flexCourse">
+                    @foreach (var studentCourse in Model.StudentCourses)
+                    {
+                        <div class="courseCard"> @studentCourse.Course.CourseId </div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

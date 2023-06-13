@@ -1,0 +1,19 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+    showErrorAlert('@ViewBag.ErrorMessage');
+
+    function showErrorAlert(message) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata!',
+            text: message
+            }).then((result) => {
+                if (result.isConfirmed) 
+                {
+                    window.location.href = '@Url.Action("AddCourse", "Students")';
+                }
+            });
+    }
+    });
+</script>
